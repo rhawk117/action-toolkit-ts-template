@@ -5,6 +5,9 @@
 	"author": "",
 	"main": "index.js",
 	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
 	"private": true,
 	"repository": {
 		"type": "git",
