@@ -21,7 +21,14 @@ const compat = new FlatCompat({
 
 export default [
 	{
-		ignores: ['**/coverage', '**/dist', '**/linter', '**/node_modules'],
+		ignores: [
+			'**/coverage',
+			'**/dist',
+			'**/linter',
+			'**/node_modules',
+			'eslint.config.mjs',
+			'rollup.config.ts',
+		],
 	},
 	...compat.extends(
 		'eslint:recommended',
@@ -57,7 +64,7 @@ export default [
 			'import/resolver': {
 				typescript: {
 					alwaysTryTypes: true,
-					project: ['tsconfig.json'],
+					project: ['./tsconfig.json'],
 				},
 			},
 		},

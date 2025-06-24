@@ -22,7 +22,8 @@
 		"format": "npx prettier --write .",
 		"check": "npx prettier --check .",
 		"lint": "npx eslint .",
-		"package": "npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript"
+		"lint:fix": "npx eslint . --fix",
+		"package": "npx rollup --config rollup.config.ts"
 	},
 	"homepage": "https://github.com/rhawk117/action-toolkit-ts-template#readme",
 	"devDependencies": {
