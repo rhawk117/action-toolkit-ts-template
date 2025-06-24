@@ -1,13 +1,14 @@
 // See: https://eslint.org/docs/latest/use/configure/configuration-files
 
+import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import _import from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 import path from 'node:path';
-import { includeIgnoreFile } from '@eslint/compat';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,10 +19,10 @@ const compat = new FlatCompat({
 	allConfig: js.configs.all,
 });
 
-const gitIgnore = fileURLToPath(new URL('./.gitignore', import.meta.url));
-
 export default [
-	includeIgnoreFile(gitIgnore),
+	{
+		ignores: ['**/coverage', '**/dist', '**/linter', '**/node_modules'],
+	},
 	...compat.extends(
 		'eslint:recommended',
 		'plugin:@typescript-eslint/eslint-recommended',
@@ -30,6 +31,7 @@ export default [
 	),
 	{
 		plugins: {
+			import: fixupPluginRules(_import),
 			prettier,
 			'@typescript-eslint': typescriptEslint,
 		},
@@ -37,7 +39,6 @@ export default [
 		languageOptions: {
 			globals: {
 				...globals.node,
-				...globals.jest,
 				Atomics: 'readonly',
 				SharedArrayBuffer: 'readonly',
 			},
@@ -47,7 +48,7 @@ export default [
 			sourceType: 'module',
 
 			parserOptions: {
-				project: ['tsconfig.eslint.json'],
+				project: ['tsconfig.json'],
 				tsconfigRootDir: '.',
 			},
 		},
@@ -56,7 +57,7 @@ export default [
 			'import/resolver': {
 				typescript: {
 					alwaysTryTypes: true,
-					project: 'tsconfig.eslint.json',
+					project: ['tsconfig.json'],
 				},
 			},
 		},
